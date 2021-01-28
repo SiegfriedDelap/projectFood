@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     //Timer
 
-    const deadLine = '2021-01-7';
+    const deadLine = '2021-01-10';
 
     function getTimeRemaning (endtime) { //получаем время
 
@@ -109,10 +109,10 @@ window.addEventListener('DOMContentLoaded',()=>{
              if(t.total <= 0 ){
                 
                 clearInterval(timeInterval);
-                days.innerHTML = 10;
-                hours.innerHTML = 10; //по умолчанию при отрицательном
-                minutes.innerHTML = 10;
-                seconds.innerHTML = 10;
+                days.innerHTML = "X";
+                hours.innerHTML = "X"; //по умолчанию при отрицательном
+                minutes.innerHTML = "X";
+                seconds.innerHTML = "X";
              }
          }
 
@@ -121,5 +121,59 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 setClock('.timer', deadLine);
 
+
+//Модальное окно
+
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+            modal = document.querySelector('.modal'),
+            modalCloseBtn = document.querySelector('[data-close]');
+
+
+    modalTrigger.forEach(btn => {
+
+        btn.addEventListener('click', ()=> {
+
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            //modal.classList.toggle('show');
+            document.body.style.overflow = 'hidden';
+    
+        });
+
+
+    });
+
+    function closeModal() {
+
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        //modal.classList.toggle('show');
+        document.body.style.overflow = '';
+
+    }
+    
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+
+    //клик вне области модального окна закрывает его
+    modal.addEventListener('click', (e)=>{
+
+        if (e.target === modal) {
+
+            closeModal();
+
+        }
+
+
+    });
+
+    //Esc закрывает модальное окно
+    document.addEventListener('keydown', (e)=> {
+        if(e.code === "Escape" && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
 
 });
