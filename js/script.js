@@ -129,18 +129,18 @@ setClock('.timer', deadLine);
             modal = document.querySelector('.modal'),
             modalCloseBtn = document.querySelector('[data-close]');
 
+//открытие модального окна
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden'; //прокрутка не работает
+        clearInterval(modalTimerId); //если пользователь сам открыл модалку, то мы больше его не задрачиваем
+    }
 
     modalTrigger.forEach(btn => {
 
-        btn.addEventListener('click', ()=> {
-
-            modal.classList.add('show');
-            modal.classList.remove('hide');
-            //modal.classList.toggle('show');
-            document.body.style.overflow = 'hidden';
-    
-        });
-
+        btn.addEventListener('click', openModal);
 
     });
 
@@ -175,5 +175,20 @@ setClock('.timer', deadLine);
             closeModal();
         }
     });
+
+//открытие модального онка через Ное время
+
+    const modalTimerId = setTimeout (openModal,5000);
+
+    //долистали до конца вызвали модалку
+
+    function showModalByScroll() {
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight){
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener ('scroll', showModalByScroll);
 
 });
