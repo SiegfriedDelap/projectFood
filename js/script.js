@@ -390,5 +390,63 @@ window.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    //Slider
+
+    // 1.получить все элементы с какими работаем
+    // 2.получить индекс для работы
+    // 3.функция показа слайдов - принимает индекс и показывает, условие конца
+    // 4.навесить обработчики событий
+
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+    let slideIndex = 1;
+
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    }else{
+        total.textContent = slides.length;
+    }
+
+    function showSlides(n) {
+        //если н больше количества слайдов, ушли в правую границу, то идем в начало
+        if (n> slides.length){
+            slideIndex = 1;
+        }
+        //если н меньше чем еденица, то идем просто в конец слайдов
+        if (n<1){
+            slideIndex = slides.length;
+        }
+
+        //скрываем все слайды
+        slides.forEach(item => item.style.display = 'none');
+
+        //показываем текущий слайд начиная с 0 элемента массива данных со слайдами
+        slides[slideIndex - 1].style.display = 'block';
+
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        }else{
+            current.textContent = slideIndex;
+        }
+        
+    }
+
+    function plusSlide(n){
+        showSlides(slideIndex += n);
+    }
+
+    prev.addEventListener('click', ()=> {
+        plusSlide(-1);
+    });
+
+    next.addEventListener('click', ()=> {
+        plusSlide(1);
+    });
+
 
 });
