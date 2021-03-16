@@ -287,7 +287,7 @@ window.addEventListener('DOMContentLoaded', () => {
     //         document.querySelector('.menu .container').append(element);
     //     });
 
-    }
+    // }
 
 
     //Отправка данных на вебсервер
