@@ -257,9 +257,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //генерация карт с шаблонизацией
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => {
+            // data.forEach(({img, altimg, title, descr, price}) => { //деструктуризация объекта по его  частям
+            //     new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+            // });
+    //     });
+
+     axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => { //деструктуризация объекта по его  частям
+            data.data.forEach(({img, altimg, title, descr, price}) => { //деструктуризация объекта по его  частям
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
