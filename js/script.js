@@ -512,16 +512,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     next.addEventListener('click', ()=>{
         //вычисляем последний слайд по формуле
-        if(offset == +width.slice(0, width.length-2) * (slides.length - 1)){
+        if(offset == (deletePX(width) * (slides.length - 1))){
             offset = 0;
         } else {
-            offset += +width.slice(0, width.length-2);
+            offset += deletePX(width);
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
 
         if(slideIndex == slides.length){
-            slideIndex =1;
+            slideIndex = 1;
         } else {
             slideIndex++;
         }
@@ -533,9 +533,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     prev.addEventListener('click', ()=>{
         if(offset == 0){
-            offset = +width.slice(0,width.length-2) * (slides.length - 1);
+            offset = deletePX(width) * (slides.length - 1);
         } else {
-            offset -= +width.slice(0,width.length-2);
+            offset -= deletePX(width);
         }
         
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -562,7 +562,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = slideTo;
-            offset = +width.slice(0, width.length - 2) * (slideTo-1);
+            offset = deletePX(width) * (slideTo-1);
 
             slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -574,6 +574,9 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    function deletePX(str){
+        return +str.replace(/px/g,'');
+    }
     //простая версия без активности и карусели
 
     // showSlides(slideIndex);
@@ -619,6 +622,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // next.addEventListener('click', ()=> {
     //     plusSlide(1);
     // });
+
+    
 
 
 });
