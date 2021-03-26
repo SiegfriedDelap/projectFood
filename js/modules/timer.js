@@ -1,8 +1,8 @@
-function timer() {
+function timer(id, deadline) {
 
     //Timer
 
-    const deadLine = '2021-01-10';
+    
 
     function getTimeRemaning(endtime) { //получаем время
 
@@ -65,8 +65,8 @@ function timer() {
     }
 
 
-    setClock('.timer', deadLine);
+    setClock(id, deadline);
 
 }
 
-module.exports = timer;
+export default timer;

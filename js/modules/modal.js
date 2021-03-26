@@ -1,33 +1,40 @@
-function modal() {
+function openModal(modalSelector, modalTimerId) {
+    const modal = document.querySelector(modalSelector);
 
-    const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal');
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden'; //прокрутка не работает
+    
+    if(modalTimerId) {
+        clearInterval(modalTimerId); //если пользователь сам открыл модалку, то мы больше его не задрачиваем
+    }
+}
+
+function closeModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    //modal.classList.toggle('show');
+    document.body.style.overflow = '';
+
+}
+
+
+function modal(triggerSelector, modalSelector, modalTimerId) {
+
+    const modalTrigger = document.querySelectorAll(triggerSelector),
+        modal = document.querySelector(modalSelector);
 
     //открытие модального окна
 
-    function openModal() {
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-        document.body.style.overflow = 'hidden'; //прокрутка не работает
-        clearInterval(modalTimerId); //если пользователь сам открыл модалку, то мы больше его не задрачиваем
-    }
 
     modalTrigger.forEach(btn => {
 
-        btn.addEventListener('click', openModal);
+    clearInterval(modalTimerId); //если пользователь сам открыл модалку, то мы больше его не задрачиваем
+        btn.addEventListener('click', () => openModal(modalSelector, modalTimerId ));
 
     });
-
-    function closeModal() {
-
-        modal.classList.add('hide');
-        modal.classList.remove('show');
-        //modal.classList.toggle('show');
-        document.body.style.overflow = '';
-
-    }
-
-
 
 
 
@@ -36,7 +43,7 @@ function modal() {
 
         if (e.target === modal || e.target.getAttribute('data-close') == '') {
 
-            closeModal();
+            closeModal(modalSelector);
 
         }
 
@@ -46,19 +53,16 @@ function modal() {
     //Esc закрывает модальное окно
     document.addEventListener('keydown', (e) => {
         if (e.code === "Escape" && modal.classList.contains('show')) {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
 
-    //открытие модального онка через Ное время
-
-    const modalTimerId = setTimeout(openModal, 5000000);
 
     //долистали до конца вызвали модалку
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            openModal();
+            openModal(modalSelector, modalTimerId);
             window.removeEventListener('scroll', showModalByScroll);
         }
     }
@@ -68,4 +72,6 @@ function modal() {
 
 }
 
-module.exports = modal;
+export default modal;
+export {closeModal};
+export {openModal};

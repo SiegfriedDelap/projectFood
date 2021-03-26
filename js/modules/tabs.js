@@ -1,7 +1,7 @@
-function tabs() {
-    const tabs = document.querySelectorAll('.tabheader__item'),
-        tabsContent = document.querySelectorAll('.tabcontent'),
-        tabsParent = document.querySelector('.tabheader__items');
+function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
+    const tabs = document.querySelectorAll(tabsSelector),
+        tabsContent = document.querySelectorAll(tabsContentSelector),
+        tabsParent = document.querySelector(tabsParentSelector);
 
     function hideTabContent() {
         tabsContent.forEach(item => {
@@ -14,7 +14,7 @@ function tabs() {
 
         tabs.forEach(item => {
 
-            item.classList.remove('tabheader__item_active'); //убираем класс активности у всех табовы
+            item.classList.remove(activeClass); //убираем класс активности у всех табовы
 
         });
     }
@@ -23,7 +23,7 @@ function tabs() {
         // tabsContent[i].style.display = 'block'; //inline вариант смены стиля
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
-        tabs[i].classList.add('tabheader__item_active');
+        tabs[i].classList.add(activeClass);
     }
 
 
@@ -35,7 +35,7 @@ function tabs() {
 
         const target = e.target;
 
-        if (target && target.classList.contains('tabheader__item')) {
+        if (target && target.classList.contains(tabsSelector.slice(1))) {
             //при клике на список мы должны определять его номер и вызвать функцию шоу
             tabs.forEach((item, i) => { //callback func мы перебираем все табы и их номера, если клик мышки по табу совпал с табом из фор ича, то мы вызываем
                 //две функции написаные ранее, а в шоу кладем номер таба для показа
@@ -50,5 +50,4 @@ function tabs() {
 
     });
 }
-
-module.exports = tabs;
+export default tabs;
